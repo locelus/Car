@@ -1,0 +1,19 @@
+Aspects of Car From Site
+    Site
+    Year
+    Brand
+    Model
+    Type, e.g. sedan
+    Transmission type
+    Drivetrain, e.g. AWD
+Aspects of Car from Edmunds
+    Drivetrain (if not specified in posting)
+    Horsepower
+    Curb Weight
+    HP ratio
+    Torque
+    MPG
+Secondary Aspects of Car
+    KBB Value
+    Maintenance $
+    Safety

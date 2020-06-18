@@ -1,0 +1,9 @@
+Make
+Model
+Min-Max Price
+Min-Max Year
+Search Radius
+
+TBD:
+Body Style
+Min-Max Mileage
