@@ -1,7 +1,7 @@
 class CarSpecs:
     def __init__(self, brand, model, price_min, price_max, year_min, year_max, search_radius):
-        self.brand = brand.capitalize()
-        self.model = model.capitalize()
+        self.brand = brand    # .capitalize().replace(' ', '')
+        self.model = model    # .capitalize().replace(' ', '')
         self.price_min = price_min
         self.price_max = price_max
         self.year_min = year_min

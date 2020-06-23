@@ -8,6 +8,13 @@ import csv
 from CarSpecs import *
 
 
+def search_all(car_specs):
+    search_autolist(car_specs)
+    search_craigslist(car_specs)
+    search_edmunds(car_specs)
+    search_cr(car_specs)
+
+
 def fb_number(radius):
     fb_numbers = [1, 2, 5, 10, 20, 40, 60, 80, 100, 250, 500]
     for i in fb_numbers:
@@ -16,33 +23,37 @@ def fb_number(radius):
 
 
 def search_autolist(car_specs):
-    autolist_url = f"https://autolist.com/listings#make={car_specs.brand}&model={car_specs.model}"
+    autolist_url = f"https://autolist.com/listings#make={car_specs.brand}&model={car_specs.model.replace(' ', '+')}"
     autolist_url += f"&price_min={car_specs.price_min}"
     autolist_url += f"&price_max={car_specs.price_max}"
     autolist_url += f"&year_min={car_specs.year_min}"
     autolist_url += f"&year_max={car_specs.year_max}"
     autolist_url += f"&radius={car_specs.search_radius}"
+    print(f"Autolist: {autolist_url}")
     driver.get(autolist_url)
 
 
 def search_craigslist(car_specs):
-    craigslist_url = f"https://westernmass.craigslist.org/search/cta?auto_make_model={car_specs.brand}" \
-                     f"+{car_specs.model}"
+    craigslist_url = f"https://westernmass.craigslist.org/search/cta?auto_make_model={car_specs.brand.lower()}" \
+                     f"+{car_specs.model.lower()}"
     craigslist_url += f"&min_price={car_specs.price_min}"
     craigslist_url += f"&max_price={car_specs.price_max}"
     craigslist_url += f"&min_auto_year={car_specs.year_min}"
     craigslist_url += f"&max_auto_year={car_specs.year_max}"
     craigslist_url += f"&search_distance={car_specs.search_radius}"
+    print(f"Craigslist: {craigslist_url}")
     driver.get(craigslist_url)
 
 
 def search_edmunds(car_specs):
-    edmunds_url = f"https://www.edmunds.com/inventory/srp.html?make={car_specs.brand}&model={car_specs.model}/"
+    edmunds_url = f"https://www.edmunds.com/inventory/srp.html?make={car_specs.brand.lower()}" \
+                  f"&model={car_specs.model.lower().replace(' ', '-')}/"
     edmunds_url += f"&price={car_specs.price_min}-"
     edmunds_url += f"{car_specs.price_max}"
     edmunds_url += f"&year={car_specs.year_min}-"
     edmunds_url += f"{car_specs.year_max}"
     edmunds_url += f"&radius={car_specs.search_radius}"
+    print(f"Edmunds: {edmunds_url}")
     driver.get(edmunds_url)
 
 
@@ -74,6 +85,7 @@ def search_cr(car_specs):
     for x in range(int(car_specs.year_min), int(car_specs.year_max)):
         cr_url += f"{x},"
     cr_url += f"&distance={car_specs.search_radius}"
+    print(f"Consumer Reports: {cr_url}")
     driver.get(cr_url)
 
 
@@ -110,4 +122,4 @@ homebase_url = "https://app.joinhomebase.com/"
 # Initializing driver
 driver = Chrome(options=chrome_options, executable_path="%s" % executable_path)
 current_specs = get_specs()
-search_cr(current_specs)
+search_edmunds(current_specs)
