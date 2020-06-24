@@ -1,0 +1,24 @@
+def fb_number(radius):
+    fb_numbers = [1, 2, 5, 10, 20, 40, 60, 80, 100, 250, 500]
+    for i in fb_numbers:
+        if i >= radius:
+            return i
+
+def search_fb(car_specs):
+    fb_url = f"https://www.facebook.com/marketplace/107710392585440/vehicles?make={car_specs.brand}" \
+             f"&model={car_specs.model}"
+    fb_url += f"&minPrice={car_specs.price_min}"
+    fb_url += f"&maxPrice={car_specs.price_max}"
+    fb_url += f"&minYear={car_specs.year_min}"
+    fb_url += f"&maxYear={car_specs.year_max}"
+    driver.get(fb_url)
+    driver.implicitly_wait(2)
+    driver.find_element_by_xpath('//div[@class="buofh1pr"]').click()
+    driver.implicitly_wait(2)
+    list_element = driver.find_element_by_xpath('//div[@aria-label="Radius"]').click()
+    driver.implicitly_wait(2)
+    driver.find_element_by_xpath(f'//*[text() = "{fb_number(car_specs.search_radius)} "]').click()
+    apply_button = driver.find_element_by_xpath('//div[@aria-label="Apply"]')
+    time.sleep(2)
+    driver.execute_script("arguments[0].click()", apply_button)
+    print(fb_url)

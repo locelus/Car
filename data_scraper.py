@@ -15,13 +15,6 @@ def search_all(car_specs):
     search_cr(car_specs)
 
 
-def fb_number(radius):
-    fb_numbers = [1, 2, 5, 10, 20, 40, 60, 80, 100, 250, 500]
-    for i in fb_numbers:
-        if i >= radius:
-            return i
-
-
 def search_autolist(car_specs):
     autolist_url = f"https://autolist.com/listings#make={car_specs.brand}&model={car_specs.model.replace(' ', '+')}"
     autolist_url += f"&price_min={car_specs.price_min}"
@@ -40,7 +33,7 @@ def search_craigslist(car_specs):
     craigslist_url += f"&max_price={car_specs.price_max}"
     craigslist_url += f"&min_auto_year={car_specs.year_min}"
     craigslist_url += f"&max_auto_year={car_specs.year_max}"
-    craigslist_url += f"&search_distance={car_specs.search_radius}"
+    craigslist_url += f"&search_distance={car_specs.search_radius}&postal=01742"
     print(f"Craigslist: {craigslist_url}")
     driver.get(craigslist_url)
 
@@ -55,25 +48,6 @@ def search_edmunds(car_specs):
     edmunds_url += f"&radius={car_specs.search_radius}"
     print(f"Edmunds: {edmunds_url}")
     driver.get(edmunds_url)
-
-
-def search_fb(car_specs):
-    fb_url = f"https://www.facebook.com/marketplace/107710392585440/vehicles?make={car_specs.brand}" \
-             f"&model={car_specs.model}"
-    fb_url += f"&minPrice={car_specs.price_min}"
-    fb_url += f"&maxPrice={car_specs.price_max}"
-    fb_url += f"&minYear={car_specs.year_min}"
-    fb_url += f"&maxYear={car_specs.year_max}"
-    driver.get(fb_url)
-    driver.implicitly_wait(2)
-    driver.find_element_by_xpath('//div[@class="buofh1pr"]').click()
-    driver.implicitly_wait(2)
-    list_element = driver.find_element_by_xpath('//div[@aria-label="Radius"]').click()
-    driver.implicitly_wait(2)
-    driver.find_element_by_xpath(f'//*[text() = "{fb_number(car_specs.search_radius)} "]').click()
-    apply_button = driver.find_element_by_xpath('//div[@aria-label="Apply"]')
-    time.sleep(2)
-    driver.execute_script("arguments[0].click()", apply_button)
 
 
 def search_cr(car_specs):
@@ -97,7 +71,8 @@ def get_specs():
     year_min = input("Minimum Year: ")
     year_max = input("Maximum Year: ")
     search_radius = input("Search Radius: ")
-    _specs = CarSpecs(brand, model, price_min, price_max, year_min, year_max, search_radius)
+    mileage = input("Maximum Mileage: ")
+    _specs = CarSpecs(brand, model, price_min, price_max, year_min, year_max, search_radius, mileage)
     return _specs
 
 
@@ -116,10 +91,7 @@ executable_path = os.getcwd() + os.path.sep + 'chromedriver'
 if sys.platform in ['win32', 'win64']:
     executable_path += ".exe"
 
-# Initializing URLs
-homebase_url = "https://app.joinhomebase.com/"
-
 # Initializing driver
 driver = Chrome(options=chrome_options, executable_path="%s" % executable_path)
 current_specs = get_specs()
-search_edmunds(current_specs)
+search_fb(current_specs)
