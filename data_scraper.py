@@ -16,13 +16,6 @@ def search_all(car_specs):
     search_fb(car_specs)
 
 
-def fb_number(radius):
-    fb_numbers = [1, 2, 5, 10, 20, 40, 60, 80, 100, 250, 500]
-    for i in fb_numbers:
-        if i >= radius:
-            return i
-
-
 def search_autolist(car_specs):
     autolist_url = f"https://autolist.com/listings#make={car_specs.brand}&model={car_specs.model.replace(' ', '+')}"
     autolist_url += f"&price_min={car_specs.price_min}"
@@ -30,6 +23,7 @@ def search_autolist(car_specs):
     autolist_url += f"&year_min={car_specs.year_min}"
     autolist_url += f"&year_max={car_specs.year_max}"
     autolist_url += f"&radius={car_specs.search_radius}"
+    autolist_url += f"&mileage={car_specs.mileage}"
     print(f"Autolist: {autolist_url}")
     driver.get(autolist_url)
 
@@ -42,6 +36,7 @@ def search_craigslist(car_specs):
     craigslist_url += f"&min_auto_year={car_specs.year_min}"
     craigslist_url += f"&max_auto_year={car_specs.year_max}"
     craigslist_url += f"&search_distance={car_specs.search_radius}&postal=01742"
+    craigslist_url += f"&max_auto_miles={car_specs.mileage}"
     print(f"Craigslist: {craigslist_url}")
     driver.get(craigslist_url)
 
@@ -54,6 +49,7 @@ def search_edmunds(car_specs):
     edmunds_url += f"&year={car_specs.year_min}-"
     edmunds_url += f"{car_specs.year_max}"
     edmunds_url += f"&radius={car_specs.search_radius}"
+    edmunds_url += f"&mileage=*-{car_specs.mileage}"
     print(f"Edmunds: {edmunds_url}")
     driver.get(edmunds_url)
 
@@ -65,6 +61,7 @@ def search_fb(car_specs):
     fb_url += f"&maxPrice={car_specs.price_max}"
     fb_url += f"&minYear={car_specs.year_min}"
     fb_url += f"&maxYear={car_specs.year_max}"
+    fb_url += f"&maxMileage={car_specs.mileage}"
     driver.get(fb_url)
     print(fb_url)
 
@@ -78,6 +75,7 @@ def search_cr(car_specs):
     for x in range(int(car_specs.year_min), int(car_specs.year_max)):
         cr_url += f"{x},"
     cr_url += f"&distance={car_specs.search_radius}"
+    cr_url += f"&milesMax={car_specs.mileage}"
     print(f"Consumer Reports: {cr_url}")
     driver.get(cr_url)
 

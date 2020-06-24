@@ -1,9 +1,9 @@
-Make
+Brand
 Model
 Min-Max Price
 Min-Max Year
 Search Radius
+Max Mileage
 
 TBD:
 Body Style
-Min-Max Mileage
