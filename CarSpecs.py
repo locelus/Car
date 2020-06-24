@@ -9,4 +9,6 @@ class CarSpecs:
         self.year_min = year_min
         self.year_max = year_max
         self.search_radius = search_radius
+        if self.search_radius is '':
+            self.search_radius = 100
         self.mileage = mileage

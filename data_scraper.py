@@ -12,8 +12,8 @@ def search_all(car_specs):
     search_autolist(car_specs)
     search_craigslist(car_specs)
     search_edmunds(car_specs)
-    search_cr(car_specs)
     search_fb(car_specs)
+    search_cr(car_specs)
 
 
 def search_autolist(car_specs):
@@ -63,7 +63,7 @@ def search_fb(car_specs):
     fb_url += f"&maxYear={car_specs.year_max}"
     fb_url += f"&maxMileage={car_specs.mileage}"
     driver.get(fb_url)
-    print(fb_url)
+    print("Facebook: " + fb_url)
 
 
 def search_cr(car_specs):
@@ -72,8 +72,9 @@ def search_cr(car_specs):
     cr_url += f"&priceMin={car_specs.price_min}"
     cr_url += f"&priceMax={car_specs.price_max}"
     cr_url += "&crModelYear="
-    for x in range(int(car_specs.year_min), int(car_specs.year_max)):
-        cr_url += f"{x},"
+    if car_specs.year_min is not '' and car_specs.year_max is not '':
+        for x in range(int(car_specs.year_min), int(car_specs.year_max)):
+            cr_url += f"{x},"
     cr_url += f"&distance={car_specs.search_radius}"
     cr_url += f"&milesMax={car_specs.mileage}"
     print(f"Consumer Reports: {cr_url}")
