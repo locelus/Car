@@ -6,6 +6,7 @@ import time
 from openpyxl import load_workbook, Workbook
 import csv
 from CarSpecs import *
+from Car import *
 
 
 def search_all(car_specs):
@@ -26,6 +27,16 @@ def search_autolist(car_specs):
     autolist_url += f"&mileage={car_specs.mileage}"
     print(f"Autolist: {autolist_url}")
     driver.get(autolist_url)
+    scrape_autolist()
+
+
+def scrape_autolist():
+    web_cars = driver.find_elements_by_xpath('//div[@class="vehicle-item-view"]')
+    cars = []
+    for x in web_cars:
+        name = x.find_elements_by_xpath('.//div[@class="headline"]')[0].text
+        cost = x.find_elements_by_xpath('.//div[@class="headline"]')[1].text
+        cars.append(Car(name, cost))
 
 
 def search_craigslist(car_specs):
