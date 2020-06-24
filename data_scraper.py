@@ -13,6 +13,14 @@ def search_all(car_specs):
     search_craigslist(car_specs)
     search_edmunds(car_specs)
     search_cr(car_specs)
+    search_fb(car_specs)
+
+
+def fb_number(radius):
+    fb_numbers = [1, 2, 5, 10, 20, 40, 60, 80, 100, 250, 500]
+    for i in fb_numbers:
+        if i >= radius:
+            return i
 
 
 def search_autolist(car_specs):
@@ -48,6 +56,17 @@ def search_edmunds(car_specs):
     edmunds_url += f"&radius={car_specs.search_radius}"
     print(f"Edmunds: {edmunds_url}")
     driver.get(edmunds_url)
+
+
+def search_fb(car_specs):
+    fb_url = f"https://www.facebook.com/marketplace/107710392585440/vehicles?make={car_specs.brand}" \
+             f"&model={car_specs.model}"
+    fb_url += f"&minPrice={car_specs.price_min}"
+    fb_url += f"&maxPrice={car_specs.price_max}"
+    fb_url += f"&minYear={car_specs.year_min}"
+    fb_url += f"&maxYear={car_specs.year_max}"
+    driver.get(fb_url)
+    print(fb_url)
 
 
 def search_cr(car_specs):
