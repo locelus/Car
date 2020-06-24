@@ -98,19 +98,15 @@ def get_specs():
 # Initializes chrome options
 download_dir = os.getcwd() + r"\Homebase Spreadsheets"
 chrome_options = ChromeOptions()
-chrome_options.add_experimental_option("prefs", {
-  "download.default_directory": download_dir,
-  "download.prompt_for_download": False,
-  "download.directory_upgrade": True,
-  "safebrowsing.enabled": True
-})
-
 # Gets the path of the chromedriver, and creates it if it doesn't exist
 executable_path = os.getcwd() + os.path.sep + 'chromedriver'
 if sys.platform in ['win32', 'win64']:
     executable_path += ".exe"
-
 # Initializing driver
 driver = Chrome(options=chrome_options, executable_path="%s" % executable_path)
+
+# Gets the specs for the car
 current_specs = get_specs()
-search_fb(current_specs)
+
+# Searches for the car using the specs
+search_all(current_specs)
